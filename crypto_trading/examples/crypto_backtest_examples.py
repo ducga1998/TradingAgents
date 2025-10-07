@@ -4,12 +4,14 @@ Demonstrates various trading strategies and agent integration
 """
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path (go up 3 levels: examples -> crypto_trading -> TradingAgents)
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
 from datetime import datetime, timedelta
-from tradingagents.backtesting import CryptoBacktestEngine, OrderType
-from tradingagents.backtesting.crypto_data_loader import CryptoDataLoader
-from tradingagents.backtesting.crypto_strategy_evaluator import CryptoStrategyEvaluator, AgentDecision
+from crypto_trading.src.backtesting.crypto_backtest_engine import CryptoBacktestEngine, OrderType
+from crypto_trading.src.backtesting.crypto_data_loader import CryptoDataLoader
+from crypto_trading.src.backtesting.crypto_strategy_evaluator import CryptoStrategyEvaluator, AgentDecision
 
 
 # ============================================================================

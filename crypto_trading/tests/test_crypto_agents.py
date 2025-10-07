@@ -5,14 +5,15 @@ Tests the crypto-specific analyst agents
 import os
 import sys
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add project root to path (go up 3 levels: tests -> crypto_trading -> TradingAgents)
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
 from tradingagents.agents.analysts.onchain_analyst import create_onchain_analyst
-from tradingagents.agents.analysts.crypto_fundamentals_analyst import create_crypto_fundamentals_analyst
-from tradingagents.agents.analysts.crypto_technical_analyst import create_crypto_technical_analyst
-from tradingagents.agents.analysts.crypto_news_analyst import create_crypto_news_analyst
-from tradingagents.agents.analysts.crypto_sentiment_analyst import create_crypto_sentiment_analyst
+from crypto_trading.src.agents.crypto_fundamentals_analyst import create_crypto_fundamentals_analyst
+from crypto_trading.src.agents.crypto_technical_analyst import create_crypto_technical_analyst
+from crypto_trading.src.agents.crypto_news_analyst import create_crypto_news_analyst
+from crypto_trading.src.agents.crypto_sentiment_analyst import create_crypto_sentiment_analyst
 
 
 def print_section(title):
@@ -27,7 +28,7 @@ def test_crypto_tools():
     print_section("TESTING CRYPTO TOOLS")
 
     try:
-        from tradingagents.agents.utils.crypto_tools import (
+        from crypto_trading.src.agents.crypto_tools import (
             get_onchain_metrics,
             get_crypto_market_data,
             get_crypto_fundamentals,

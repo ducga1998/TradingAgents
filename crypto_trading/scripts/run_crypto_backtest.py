@@ -6,12 +6,13 @@ import os
 import sys
 from datetime import datetime, timedelta
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add project root to path (go up 3 levels: scripts -> crypto_trading -> TradingAgents)
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
-from tradingagents.backtesting import CryptoBacktestEngine, OrderType
-from tradingagents.backtesting.crypto_data_loader import CryptoDataLoader, CRYPTO_MARKET_CYCLES
-from tradingagents.backtesting.crypto_strategy_evaluator import CryptoStrategyEvaluator
+from crypto_trading.src.backtesting.crypto_backtest_engine import CryptoBacktestEngine, OrderType
+from crypto_trading.src.backtesting.crypto_data_loader import CryptoDataLoader, CRYPTO_MARKET_CYCLES
+from crypto_trading.src.backtesting.crypto_strategy_evaluator import CryptoStrategyEvaluator
 
 
 def print_section(title):

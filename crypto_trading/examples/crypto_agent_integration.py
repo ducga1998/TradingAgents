@@ -5,15 +5,16 @@ Demonstrates crypto agent usage with the framework
 import os
 import sys
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path (go up 3 levels: examples -> crypto_trading -> TradingAgents)
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
 from langchain_openai import ChatOpenAI
 from tradingagents.agents.analysts.onchain_analyst import create_onchain_analyst
-from tradingagents.agents.analysts.crypto_fundamentals_analyst import create_crypto_fundamentals_analyst
-from tradingagents.agents.analysts.crypto_technical_analyst import create_crypto_technical_analyst
-from tradingagents.agents.analysts.crypto_news_analyst import create_crypto_news_analyst
-from tradingagents.agents.analysts.crypto_sentiment_analyst import create_crypto_sentiment_analyst
+from crypto_trading.src.agents.crypto_fundamentals_analyst import create_crypto_fundamentals_analyst
+from crypto_trading.src.agents.crypto_technical_analyst import create_crypto_technical_analyst
+from crypto_trading.src.agents.crypto_news_analyst import create_crypto_news_analyst
+from crypto_trading.src.agents.crypto_sentiment_analyst import create_crypto_sentiment_analyst
 from tradingagents.crypto_config import get_crypto_config
 from tradingagents.dataflows.config import set_config
 

@@ -6,8 +6,9 @@ import os
 import sys
 from datetime import datetime, timedelta
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add project root to path (go up 3 levels: tests -> crypto_trading -> TradingAgents)
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
 from tradingagents.dataflows.ccxt_vendor import (
     CCXTVendor,
