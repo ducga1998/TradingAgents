@@ -20,6 +20,20 @@ from tradingagents.agents.utils.news_data_tools import (
     get_global_news
 )
 
+# Import crypto-specific tools
+from tradingagents.agents.utils.crypto_tools import (
+    get_onchain_metrics,
+    get_exchange_flows,
+    get_whale_activity,
+    get_crypto_market_data,
+    get_crypto_ticker,
+    get_crypto_fundamentals,
+    get_crypto_news,
+    get_order_book_analysis,
+    get_tokenomics,
+    get_market_overview
+)
+
 def create_msg_delete():
     def delete_messages(state):
         """Clear messages and add placeholder for Anthropic compatibility"""
