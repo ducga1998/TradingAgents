@@ -7,6 +7,13 @@ from .analysts.market_analyst import create_market_analyst
 from .analysts.news_analyst import create_news_analyst
 from .analysts.social_media_analyst import create_social_media_analyst
 
+# Crypto analysts
+from .analysts.crypto_technical_analyst import create_crypto_technical_analyst
+from .analysts.crypto_fundamentals_analyst import create_crypto_fundamentals_analyst
+from .analysts.crypto_news_analyst import create_crypto_news_analyst
+from .analysts.crypto_sentiment_analyst import create_crypto_sentiment_analyst
+from .analysts.onchain_analyst import create_onchain_analyst
+
 from .researchers.bear_researcher import create_bear_researcher
 from .researchers.bull_researcher import create_bull_researcher
 
@@ -37,4 +44,10 @@ __all__ = [
     "create_safe_debator",
     "create_social_media_analyst",
     "create_trader",
+    # Crypto analysts
+    "create_crypto_technical_analyst",
+    "create_crypto_fundamentals_analyst",
+    "create_crypto_news_analyst",
+    "create_crypto_sentiment_analyst",
+    "create_onchain_analyst",
 ]

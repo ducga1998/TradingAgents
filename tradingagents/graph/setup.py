@@ -44,10 +44,17 @@ class GraphSetup:
 
         Args:
             selected_analysts (list): List of analyst types to include. Options are:
+                Stock analysts:
                 - "market": Market analyst
                 - "social": Social media analyst
                 - "news": News analyst
                 - "fundamentals": Fundamentals analyst
+
+                Crypto analysts:
+                - "crypto_technical": Crypto technical analyst
+                - "crypto_onchain": Crypto on-chain analyst
+                - "crypto_sentiment": Crypto sentiment analyst
+                - "crypto_fundamentals": Crypto fundamentals analyst
         """
         if len(selected_analysts) == 0:
             raise ValueError("Trading Agents Graph Setup Error: no analysts selected!")
@@ -57,6 +64,7 @@ class GraphSetup:
         delete_nodes = {}
         tool_nodes = {}
 
+        # Stock analysts
         if "market" in selected_analysts:
             analyst_nodes["market"] = create_market_analyst(
                 self.quick_thinking_llm
@@ -84,6 +92,35 @@ class GraphSetup:
             )
             delete_nodes["fundamentals"] = create_msg_delete()
             tool_nodes["fundamentals"] = self.tool_nodes["fundamentals"]
+
+        # Crypto analysts
+        if "crypto_technical" in selected_analysts:
+            analyst_nodes["crypto_technical"] = create_crypto_technical_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["crypto_technical"] = create_msg_delete()
+            tool_nodes["crypto_technical"] = self.tool_nodes["crypto_technical"]
+
+        if "crypto_onchain" in selected_analysts:
+            analyst_nodes["crypto_onchain"] = create_onchain_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["crypto_onchain"] = create_msg_delete()
+            tool_nodes["crypto_onchain"] = self.tool_nodes["crypto_onchain"]
+
+        if "crypto_sentiment" in selected_analysts:
+            analyst_nodes["crypto_sentiment"] = create_crypto_sentiment_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["crypto_sentiment"] = create_msg_delete()
+            tool_nodes["crypto_sentiment"] = self.tool_nodes["crypto_sentiment"]
+
+        if "crypto_fundamentals" in selected_analysts:
+            analyst_nodes["crypto_fundamentals"] = create_crypto_fundamentals_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["crypto_fundamentals"] = create_msg_delete()
+            tool_nodes["crypto_fundamentals"] = self.tool_nodes["crypto_fundamentals"]
 
         # Create researcher and manager nodes
         bull_researcher_node = create_bull_researcher(

@@ -36,6 +36,20 @@ from tradingagents.agents.utils.agent_utils import (
     get_global_news
 )
 
+# Import crypto-specific tools
+from tradingagents.agents.utils.crypto_tools import (
+    get_crypto_market_data,
+    get_crypto_ticker,
+    get_order_book_analysis,
+    get_onchain_metrics,
+    get_exchange_flows,
+    get_whale_activity,
+    get_crypto_fundamentals,
+    get_crypto_news,
+    get_tokenomics,
+    get_market_overview
+)
+
 from .conditional_logic import ConditionalLogic
 from .setup import GraphSetup
 from .propagation import Propagator
@@ -123,6 +137,7 @@ class TradingAgentsGraph:
     def _create_tool_nodes(self) -> Dict[str, ToolNode]:
         """Create tool nodes for different data sources using abstract methods."""
         return {
+            # Stock analysts
             "market": ToolNode(
                 [
                     # Core stock data tools
@@ -153,6 +168,38 @@ class TradingAgentsGraph:
                     get_balance_sheet,
                     get_cashflow,
                     get_income_statement,
+                ]
+            ),
+            # Crypto analysts
+            "crypto_technical": ToolNode(
+                [
+                    # Crypto market data and technical analysis
+                    get_crypto_market_data,
+                    get_crypto_ticker,
+                    get_order_book_analysis,
+                ]
+            ),
+            "crypto_onchain": ToolNode(
+                [
+                    # On-chain blockchain data
+                    get_onchain_metrics,
+                    get_exchange_flows,
+                    get_whale_activity,
+                ]
+            ),
+            "crypto_sentiment": ToolNode(
+                [
+                    # Crypto sentiment and news
+                    get_crypto_news,
+                    get_market_overview,
+                ]
+            ),
+            "crypto_fundamentals": ToolNode(
+                [
+                    # Crypto fundamentals and tokenomics
+                    get_crypto_fundamentals,
+                    get_tokenomics,
+                    get_market_overview,
                 ]
             ),
         }

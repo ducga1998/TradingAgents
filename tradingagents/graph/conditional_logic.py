@@ -43,6 +43,39 @@ class ConditionalLogic:
             return "tools_fundamentals"
         return "Msg Clear Fundamentals"
 
+    # Crypto analyst conditional logic
+    def should_continue_crypto_technical(self, state: AgentState):
+        """Determine if crypto technical analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
+        if last_message.tool_calls:
+            return "tools_crypto_technical"
+        return "Msg Clear Crypto_technical"
+
+    def should_continue_crypto_onchain(self, state: AgentState):
+        """Determine if crypto on-chain analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
+        if last_message.tool_calls:
+            return "tools_crypto_onchain"
+        return "Msg Clear Crypto_onchain"
+
+    def should_continue_crypto_sentiment(self, state: AgentState):
+        """Determine if crypto sentiment analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
+        if last_message.tool_calls:
+            return "tools_crypto_sentiment"
+        return "Msg Clear Crypto_sentiment"
+
+    def should_continue_crypto_fundamentals(self, state: AgentState):
+        """Determine if crypto fundamentals analysis should continue."""
+        messages = state["messages"]
+        last_message = messages[-1]
+        if last_message.tool_calls:
+            return "tools_crypto_fundamentals"
+        return "Msg Clear Crypto_fundamentals"
+
     def should_continue_debate(self, state: AgentState) -> str:
         """Determine if debate should continue."""
 
