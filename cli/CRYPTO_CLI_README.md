@@ -26,11 +26,16 @@ Analyst Team → Research Team → Trader → Risk Management → Portfolio Mana
 
 ### Prerequisites
 ```bash
-# Install TradingAgents package
+# 1. Create and activate virtual environment
 cd TradingAgents
-pip install -e .
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Set up API keys (required)
+# 2. Install dependencies
+pip install -e .
+pip install -r requirements.txt
+
+# 3. Set up API keys (required)
 export OPENAI_API_KEY=your_key
 export ALPHA_VANTAGE_API_KEY=your_key
 
@@ -40,8 +45,21 @@ export MESSARI_API_KEY=your_key    # For crypto fundamentals
 ```
 
 ### Run Crypto CLI
+
+**Option 1: Using the wrapper script (Recommended)**
 ```bash
-python -m cli.main_crypto
+./run_crypto_cli.sh
+```
+
+**Option 2: Using Python directly**
+```bash
+PYTHONPATH=/Users/nguyenminhduc/Desktop/TradingAgents venv/bin/python cli/main_crypto.py
+```
+
+**Option 3: From Python module (if in project root)**
+```bash
+source venv/bin/activate
+PYTHONPATH=. python cli/main_crypto.py
 ```
 
 ### Interactive Workflow
@@ -119,11 +137,26 @@ Recommended for crypto analysis:
 
 ## Troubleshooting
 
-### ModuleNotFoundError
+### ModuleNotFoundError: No module named 'tradingagents'
 ```bash
-# Make sure package is installed in dev mode
-cd TradingAgents
+# Solution 1: Use the wrapper script (recommended)
+./run_crypto_cli.sh
+
+# Solution 2: Set PYTHONPATH manually
+PYTHONPATH=$(pwd) venv/bin/python cli/main_crypto.py
+
+# Solution 3: Reinstall in dev mode
 pip install -e .
+pip install -r requirements.txt
+```
+
+### Missing Dependencies (ccxt, glassnode)
+```bash
+# Install all requirements
+pip install -r requirements.txt
+
+# Or install specific packages
+pip install ccxt glassnode
 ```
 
 ### API Key Issues
@@ -141,7 +174,7 @@ cp .env.example .env
 If you get import errors:
 ```python
 # Test imports
-python -c "from tradingagents.agents import create_crypto_technical_analyst"
+python -c "import sys; sys.path.insert(0, '.'); from tradingagents.agents import create_crypto_technical_analyst"
 ```
 
 ## Advanced Usage
