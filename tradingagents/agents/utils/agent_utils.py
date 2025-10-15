@@ -59,6 +59,15 @@ from tradingagents.dataflows.correlation_tools import (
 
 
 def create_msg_delete():
+    """
+    Clear all messages in the provided state and insert a minimal placeholder message for compatibility.
+    
+    Parameters:
+        state (dict): Mutable state containing a "messages" key with an iterable of message objects. Each message object must have an `id` attribute used to build removal operations.
+    
+    Returns:
+        dict: A mapping with the key "messages" whose value is a list consisting of RemoveMessage removal operations for each existing message followed by a single HumanMessage placeholder with content "Continue".
+    """
     def delete_messages(state):
         """Clear messages and add placeholder for Anthropic compatibility"""
         messages = state["messages"]
