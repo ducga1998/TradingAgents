@@ -34,6 +34,30 @@ from tradingagents.agents.utils.crypto_tools import (
     get_market_overview
 )
 
+# XAU-specific tools (Gold)
+from tradingagents.dataflows.fred_api import (
+    get_dxy_data,
+    get_real_yields,
+    get_inflation_data,
+    get_fred_series,
+)
+from tradingagents.dataflows.cot_data import (
+    get_cot_positioning,
+    analyze_cot_extremes,
+)
+from tradingagents.dataflows.etf_flows import (
+    get_gold_etf_summary,
+    get_gold_etf_flows,
+    analyze_etf_divergence,
+)
+from tradingagents.dataflows.correlation_tools import (
+    calculate_asset_correlation,
+    analyze_gold_macro_correlations,
+    check_correlation_regime,
+    get_rolling_correlations,
+)
+
+
 def create_msg_delete():
     def delete_messages(state):
         """Clear messages and add placeholder for Anthropic compatibility"""
