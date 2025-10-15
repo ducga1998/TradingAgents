@@ -29,6 +29,13 @@ class XAUTradingGraph(TradingAgentsGraph):
 
     def __init__(self, debug=False, config=None):
         # Use XAU-specific config and analyst team
+        """
+        Initialize the XAUTradingGraph with XAU-specific configuration and analyst team.
+        
+        Parameters:
+            debug (bool): Enable debug mode when True.
+            config (dict | None): Optional configuration dictionary to override the default XAU_CONFIG; the analyst team is taken from this config's "analyst_team" key if present.
+        """
         xau_config = config or XAU_CONFIG
         xau_analysts = xau_config.get("analyst_team", [])
 
@@ -40,7 +47,16 @@ class XAUTradingGraph(TradingAgentsGraph):
 
     def _create_tool_nodes(self):
         """
-        Override the tool node creation to use XAU-specific tools.
+        Constructs the XAU-specific mapping of tool nodes used by the trading graph.
+        
+        Groups related analysis tools into four ToolNode entries for market data, macroeconomic indicators, news, and positioning/ETF flows.
+        
+        Returns:
+            dict: Mapping of tool node names to ToolNode instances:
+                - "xau_market": market data and indicator tools
+                - "xau_macro": macroeconomic and FRED-series tools
+                - "xau_news": news aggregation tools
+                - "xau_positioning": positioning, COT analysis, and gold ETF tools
         """
         return {
             "xau_market": ToolNode([

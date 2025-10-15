@@ -7,7 +7,9 @@ load_dotenv()
 
 def run_xau_analysis():
     """
-    Initializes and runs the XAU Trading System for a specific date.
+    Run the XAU trading-analysis workflow for a predetermined asset and date.
+    
+    Initializes the XAU trading graph with debug enabled and the module configuration, executes a propagation for the hard-coded asset ticker "GC=F" on "2024-05-10", and prints any generated macro and positioning analyst reports followed by the final trade decision. On failure, prints an error message and the exception traceback.
     """
     print("Initializing XAU Trading System...")
 

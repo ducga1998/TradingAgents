@@ -3,10 +3,28 @@ from tradingagents.dataflows.fred_api import get_dxy_data, get_real_yields, get_
 
 def create_xau_macro_analyst(llm):
     """
-    Creates a node for the XAU Macro Analyst agent.
-
-    This agent specializes in analyzing macroeconomic factors that influence the price of gold (XAU/USD).
-    It replaces the traditional fundamentals analyst for equity trading.
+    Create a node factory that builds an XAU (gold) macroeconomic analyst agent.
+    
+    The returned node analyzes macro drivers of XAU/USD (DXY, 10-year real yields, inflation metrics, and optionally Fed policy/VIX) using bound data-fetching tools, and synthesizes a comprehensive report that concludes with a Markdown table summarizing each factor's likely impact (Bullish, Bearish, or Neutral).
+    
+    Returns:
+        callable: A node function that accepts a `state` dict and returns a dict containing:
+            - "messages": a list with the agent's final message/result.
+            - "xau_macro_report": the agent's textual report (empty string if the result contains tool calls).
+    """
+    """
+    Execute the XAU macro analyst for a given state.
+    
+    Parameters:
+        state (dict): Execution state expected to include:
+            - "trade_date": date string used as the chain's current_date.
+            - "messages": conversation messages supplied to the chain.
+    
+    Returns:
+        dict: {
+            "messages": [result],            # list containing the chain result object
+            "xau_macro_report": report_str,  # string report produced when no tool calls were made
+        }
     """
 
     system_message = (
@@ -51,7 +69,17 @@ def create_xau_macro_analyst(llm):
 
     def xau_macro_analyst_node(state):
         """
-        The node function for the XAU Macro Analyst.
+        Run the XAU Macro Analyst chain for a given trading state and return the chain result plus a produced macro report.
+        
+        Parameters:
+        	state (dict): Execution state containing:
+        		- "trade_date": date or string used as the chain's current date.
+        		- "messages": list of messages to pass into the chain.
+        
+        Returns:
+        	dict: Contains:
+        		- "messages": list with the chain invocation result as its single element.
+        		- "xau_macro_report": the report string; set to the chain result's content if the result performed no tool calls, otherwise an empty string.
         """
         current_date = state["trade_date"]
         # The ticker is XAU, but the tools are specific to macro data.

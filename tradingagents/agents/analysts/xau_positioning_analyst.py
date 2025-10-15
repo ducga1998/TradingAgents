@@ -4,10 +4,26 @@ from tradingagents.dataflows.etf_flows import get_gold_etf_summary, get_gold_etf
 
 def create_xau_positioning_analyst(llm):
     """
-    Creates a node for the XAU Positioning Analyst agent.
-
-    This agent analyzes market positioning and sentiment for gold (XAU/USD)
-    using COT reports and ETF flow data. It replaces the standard social media analyst.
+    Create and configure an XAU (Gold) Positioning Analyst node that synthesizes COT reports and ETF flow data.
+    
+    Constructs a tool-assisted prompt chain focused on Gold (XAU/USD) positioning using Commitment of Traders (COT) data and major gold ETF flows, and returns a node function that performs the analysis for a given state.
+    
+    Returns:
+        xau_positioning_analyst_node (callable): A node function that accepts a `state` dict and returns a dict containing analysis messages and a generated `xau_positioning_report`.
+    """
+    """
+    Execute the XAU Positioning Analyst on a given state.
+    
+    Parameters:
+        state (dict): Execution state containing at least:
+            - "trade_date": date or date-like string used as the prompt's current_date.
+            - "messages": list of messages to pass into the prompt chain.
+    
+    Returns:
+        dict: {
+            "messages": [result_message],               # list containing the chain result message
+            "xau_positioning_report": report (str)      # report text when no tool calls were made, otherwise empty string
+        }
     """
 
     system_message = (
@@ -50,7 +66,18 @@ def create_xau_positioning_analyst(llm):
 
     def xau_positioning_analyst_node(state):
         """
-        The node function for the XAU Positioning Analyst.
+        Execute the XAU positioning analyst chain for the given state and produce a positioning report.
+        
+        Parameters:
+            state (dict): Runtime state containing:
+                - "trade_date" (str or date): Trade date to bind into the analyst chain.
+                - "messages" (list): Messages to pass into the analyst chain.
+        
+        Returns:
+            dict: {
+                "messages": [result],  # list containing the chain invocation result object
+                "xau_positioning_report": str  # report text extracted from result.content when no tool calls were made, otherwise an empty string
+            }
         """
         current_date = state["trade_date"]
         chain_with_date = chain.partial(current_date=current_date)
